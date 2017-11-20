@@ -1,0 +1,105 @@
+#!/bin/bash
+#GIT
+push()
+{
+	echo "@Verificando se existem alterações não recolhidas..@";
+	pull;
+
+	if [ $? -eq 0 ]; then
+
+		echo "@Nome do novo commit a ser feito:@";
+		read -e nome;
+
+		git add --all;
+		git commit -m "$nome";
+		git push origin master;
+	
+	else
+	
+		echo "@Ocorreu um erro ao recolher alterações (provavelmente merge conflict).@";
+	
+	fi
+}
+pull()
+{
+	git pull origin master;
+}
+log()
+{
+	git log --pretty=format:"%C(bold magenta)%ad %C(red)%d|| %C(white)%s %C(red)|| %C(blue)[%cn]" --decorate --date=relative;
+}
+new()
+{
+	if [ "$1" == "" ]; then
+
+		echo "@Introduza um "git link" correto.@"
+
+	else
+
+		git init;
+		git remote add origin $1;
+		echo "O início do desastre" > README.md;
+		git add --all;
+		git commit -m "O início do desastre";
+		git push -u origin master;
+
+	fi
+}
+help()
+{
+	echo "@@ DESCRIÇÃO DOS ALIAS E FUNÇÕES \"CLANDESTINAS\" DO GIT @@";
+	echo "git log			» mostra todos os commits"
+	echo "git push		» faz add, commit e push";
+	echo "git pull		» faz pull";
+	echo "git current		» volta para o commit atual";
+	echo "git throwback		» volta atrás 1 commit";
+	echo "git throwback-upload	» mudanças feitas num commit \"throwback\"";
+	echo "			  passam para o master - deve dar conflito no merge";
+	echo "@@ BOA SORTE! @@";
+}
+throwback()
+{
+	git checkout HEAD^1;
+}
+#throwback_push()
+#{
+#	git stash; 
+#	git checkout master; 
+#	git stash apply;
+#}
+current()
+{
+	git checkout master;
+}
+
+
+
+case $1 in
+
+	push) push
+	;;
+
+	pull) pull
+	;;
+
+	log) log
+	;;
+	
+	new) new $2
+	;;
+	
+	help) help
+	;;	
+
+	throwback) throwback
+	;;
+
+	current) current
+	;;	
+
+	*)
+	echo "@Opção não existente.@"
+	;;
+
+esac
+
