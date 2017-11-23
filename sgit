@@ -61,6 +61,10 @@ throwback()
 {
 	git checkout HEAD^1;
 }
+status()
+{
+	git status;
+}
 #throwback_push()
 #{
 #	git stash; 
@@ -96,6 +100,9 @@ case $1 in
 
 	current) current
 	;;	
+
+	status) status
+	;;
 
 	*)
 	echo "@Opção não existente.@"
