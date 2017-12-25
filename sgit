@@ -16,14 +16,12 @@ push()
 	
 	else
 	
-		echo "@Ocorreu um erro ao recolher alterações (provavelmente merge conflict).@";
+		echo "@Ocorreu um erro (possivelmente um conflito).@";
 	
 	fi
 }
 pull()
-{
-	git pull origin master;
-}
+{ git pull origin master; }
 log()
 {
 	git log --pretty=format:"%C(bold magenta)%ad %C(red)%d|| %C(white)%s %C(red)|| %C(blue)[%cn]" --decorate --date=relative;
@@ -31,49 +29,65 @@ log()
 new()
 {
 	if [ "$1" == "" ]; then
-
+	
 		echo "@Introduza um "git link" correto.@"
-
+		
 	else
-
+	
 		git init;
 		git remote add origin $1;
 		echo "O início do desastre" > README.md;
 		git add --all;
 		git commit -m "O início do desastre";
 		git push -u origin master;
-
+		
 	fi
 }
 help()
 {
 	echo "@@ DESCRIÇÃO DOS ALIAS E FUNÇÕES \"CLANDESTINAS\" DO GIT @@";
-	echo "git log			» mostra todos os commits"
-	echo "git push		» faz add, commit e push";
-	echo "git pull		» faz pull";
-	echo "git current		» volta para o commit atual";
-	echo "git throwback		» volta atrás 1 commit";
-	echo "git throwback-upload	» mudanças feitas num commit \"throwback\"";
-	echo "			  passam para o master - deve dar conflito no merge";
+	echo "sgit log		» mostra todos os commits"
+	echo "sgit push		» faz add, commit e push";
+	echo "sgit pull		» faz pull";
+	echo "sgit current		» volta para o commit atual";
+	echo "sgit throwback		» volta atrás n commits";
 	echo "@@ BOA SORTE! @@";
 }
 throwback()
 {
-	git checkout HEAD^1;
+	git checkout HEAD -f >/dev/null;
+	if [ $? -ne 0 ]; then
+	
+		echo "@Ocorreu um erro (possivelmente um conflito).@";
+		
+	fi
+	
+	if [ "$1" == "" ] || [ "$1" -le 1 ]; then
+	
+		git revert --no-commit HEAD~1..HEAD;
+		echo "@As mudanças foram revertidas para 1 commit atrás do commit mais atualizado.@";
+		
+	else
+	
+		git revert --no-commit HEAD~$1..HEAD;
+		echo "@As mudanças foram revertidas para $1 commits atrás do commit mais atualizado.@";
+		
+	fi
 }
 status()
-{
-	git status;
-}
-#throwback_push()
-#{
-#	git stash; 
-#	git checkout master; 
-#	git stash apply;
-#}
+{ git status; }
 current()
-{
-	git checkout master;
+{ 
+	git checkout HEAD -f >/dev/null; 
+	if [ $? -eq 0 ]; then
+	
+		echo "@Está tudo no mais atualizado possível.@";
+		
+	else
+	
+		echo "@Ocorreu um erro (possivelmente um conflito).@";
+		
+	fi
 }
 
 
@@ -95,7 +109,7 @@ case $1 in
 	help) help
 	;;	
 
-	throwback) throwback
+	throwback) throwback $2
 	;;
 
 	current) current
@@ -104,8 +118,7 @@ case $1 in
 	status) status
 	;;
 
-	*)
-	echo "@Opção não existente.@"
+	*) echo "@Opção não existente.@"
 	;;
 
 esac

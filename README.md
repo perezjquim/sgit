@@ -1,1 +1,2 @@
-O início do desastre
+# SGIT
+## Tentativa de simplificar o git
