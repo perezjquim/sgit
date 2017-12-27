@@ -1,7 +1,6 @@
 # SGIT - Simplified (I hope) GIT
 
-## Este script serve para abreviar/simplificar a execução de determinados comandos do git, de forma a que certas ações sejam feitas de forma mais direta e acessível.
-Para além disso, também pretende dar uma perspetiva mais visual de alguns dos processos do mesmo.
+### Este script serve para abreviar/simplificar a execução de determinados comandos do git, de forma a que certas ações sejam feitas de forma mais direta e acessível. Para além disso, também pretende dar uma perspetiva mais visual de alguns dos processos do mesmo.
 
 ## Lista de comandos:
 
