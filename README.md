@@ -14,4 +14,6 @@
 - `sgit throwback` : volta atrás n commits
 - `sgit help` : mostra a lista de comandos
 
+### <a href=https://github.com/perezjquim/sgit/archive/master.zip>DOWNLOAD</a>
+
 Para instalar, basta fazer `make` na diretoria onde foram extraídos os ficheiros.
