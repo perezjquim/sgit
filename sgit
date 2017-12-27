@@ -2,27 +2,19 @@
 #GIT
 push()
 {
-	echo "@Verificando se existem alterações não recolhidas..@";
-	pull;
+	echo "@Nome do novo commit a ser feito:@";
+	read -e nome;
 
-	if [ $? -eq 0 ]; then
-
-		echo "@Nome do novo commit a ser feito:@";
-		read -e nome;
-
-		git add --all;
-		git commit -m "$nome";
-		git push origin master;
-	
-	else
-	
-		echo "@Ocorreu um erro (possivelmente um conflito).@";
-	
-	fi
+	git add --all;
+	git commit -m "$nome";
+	git push origin master;
 }
 pull()
-{ git pull origin master; }
-log()
+{ 
+	echo "@Verificando se existem alterações não recolhidas..@";
+	git pull origin master; 
+}
+timeline()
 {
 	git log --pretty=format:"%C(bold magenta)%ad %C(red)%d|| %C(white)%s %C(red)|| %C(blue)[%cn]" --decorate --date=relative;
 }
@@ -43,54 +35,61 @@ new()
 		
 	fi
 }
-help()
-{
-	echo "@@ DESCRIÇÃO DOS ALIAS E FUNÇÕES \"CLANDESTINAS\" DO GIT @@";
-	echo "sgit log		» mostra todos os commits"
-	echo "sgit push		» faz add, commit e push";
-	echo "sgit pull		» faz pull";
-	echo "sgit current		» volta para o commit atual";
-	echo "sgit throwback		» volta atrás n commits";
-	echo "@@ BOA SORTE! @@";
-}
 throwback()
 {
-	git checkout HEAD -f >/dev/null;
+	git checkout HEAD -f > /dev/null;
+	
 	if [ $? -ne 0 ]; then
 	
 		echo "@Ocorreu um erro (possivelmente um conflito).@";
 		
+	else
+		
+		if [ "$1" == "" ] || [ "$1" -le 1 ]; then
+	
+			git revert --no-commit HEAD~1..HEAD;
+			echo "@As mudanças foram revertidas para 1 commit atrás do commit mais atualizado.@";
+		
+		else
+	
+			git revert --no-commit HEAD~$1..HEAD;
+			echo "@As mudanças foram revertidas para $1 commits atrás do commit mais atualizado.@";
+		
+		fi
+		
 	fi
+}
+current()
+{ 
+	git checkout HEAD -f > /dev/null; 
 	
-	if [ "$1" == "" ] || [ "$1" -le 1 ]; then
+	if [ $? -eq 0 ]; then
 	
-		git revert --no-commit HEAD~1..HEAD;
-		echo "@As mudanças foram revertidas para 1 commit atrás do commit mais atualizado.@";
+		echo "@Foi regressado ao commit mais recente.@";
 		
 	else
 	
-		git revert --no-commit HEAD~$1..HEAD;
-		echo "@As mudanças foram revertidas para $1 commits atrás do commit mais atualizado.@";
+		echo "@Ocorreu um erro (possivelmente um conflito).@";
 		
 	fi
 }
 status()
 { git status; }
-current()
-{ 
-	git checkout HEAD -f >/dev/null; 
-	if [ $? -eq 0 ]; then
-	
-		echo "@Está tudo no mais atualizado possível.@";
-		
-	else
-	
-		echo "@Ocorreu um erro (possivelmente um conflito).@";
-		
-	fi
+diff()
+{ echo "@Diferenças entre os dois commits:@"; git diff; }
+help()
+{
+	echo "@@ DESCRIÇÃO DOS ALIAS/FUNÇÕES DO SGIT @@";
+	echo "sgit push		» coloca as alterações locais no repositório";
+	echo "sgit pull		» recolhe alterações ao repositório";
+	echo "sgit timeline		» mostra a cronologia dos commits";
+	echo "sgit new		» inicializa o repositório";
+	echo "sgit status		» mostra o estado do commit";
+	echo "sgit diff		» compara o commit local com o commit remoto";
+	echo "sgit current		» volta para o commit atual";
+	echo "sgit throwback		» volta atrás n commits";
+	echo "@@ BOA SORTE! @@";
 }
-
-
 
 case $1 in
 
@@ -98,9 +97,6 @@ case $1 in
 	;;
 
 	pull) pull
-	;;
-
-	log) log
 	;;
 	
 	new) new $2
@@ -117,9 +113,14 @@ case $1 in
 
 	status) status
 	;;
+	
+	diff) diff
+	;;
+	
+	timeline) timeline
+	;;
 
-	*) echo "@Opção não existente.@"
+	*) echo "@Opção não existente.@"; help
 	;;
 
 esac
-
