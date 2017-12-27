@@ -10,4 +10,4 @@
 ### sgit current		» volta para o commit atual
 ### sgit throwback		» volta atrás n commits
 
-Para instalar basta fazer 'make' na diretoria onde foram extraídos os ficheiros.
+Para instalar basta fazer [make] na diretoria onde foram extraídos os ficheiros.
