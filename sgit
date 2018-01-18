@@ -1,8 +1,15 @@
 #!/bin/bash
-#GIT
+
+#########
+## SGIT ##
+#########
+
+################
+## COMMANDS ##
+################
 push()
 {
-	echo "@Nome do novo commit a ser feito:@";
+	echo "@ Name of the new commit: @";
 	read -e nome;
 
 	git add --all;
@@ -11,7 +18,7 @@ push()
 }
 pull()
 { 
-	echo "@Verificando se existem alterações não recolhidas..@";
+	echo "@ Gathering changes from the remote repository.. @";
 	git pull origin master; 
 }
 timeline()
@@ -22,7 +29,7 @@ new()
 {
 	if [ "$1" == "" ]; then
 	
-		echo "@Introduza um "git link" correto.@"
+		echo "@ Invalid git link. @";
 		
 	else
 	
@@ -41,19 +48,19 @@ throwback()
 	
 	if [ $? -ne 0 ]; then
 	
-		echo "@Ocorreu um erro (possivelmente um conflito).@";
+		echo "@ An error ocurred (possibly a conflict). @";
 		
 	else
 		
 		if [ "$1" == "" ] || [ "$1" -le 1 ]; then
 	
 			git revert --no-commit HEAD~1..HEAD;
-			echo "@As mudanças foram revertidas para 1 commit atrás do commit mais atualizado.@";
+			echo "@ Changes were reverted to 1 commit behind the latest commit. @";
 		
 		else
 	
 			git revert --no-commit HEAD~$1..HEAD;
-			echo "@As mudanças foram revertidas para $1 commits atrás do commit mais atualizado.@";
+			echo "@ Changes were reverted to $1 commits behind the latest commit. @";
 		
 		fi
 		
@@ -65,31 +72,33 @@ current()
 	
 	if [ $? -eq 0 ]; then
 	
-		echo "@Foi regressado ao commit mais recente.@";
+		echo "@ Changes were reverted to the latest commit. @";
 		
 	else
 	
-		echo "@Ocorreu um erro (possivelmente um conflito).@";
+		echo "@ An error ocurred (possibly a conflict). @";
 		
 	fi
 }
 status()
 { git status; }
 diff()
-{ echo "@Diferenças entre os dois commits:@"; git diff; }
+{ echo "@ Differences between the two commits: @"; git diff; }
 help()
 {
-	echo "@@ DESCRIÇÃO DOS ALIAS/FUNÇÕES DO SGIT @@";
-	echo "sgit push		» coloca as alterações locais no repositório";
-	echo "sgit pull		» recolhe alterações ao repositório";
-	echo "sgit timeline		» mostra a cronologia dos commits";
-	echo "sgit new		» inicializa o repositório";
-	echo "sgit status		» mostra o estado do commit";
-	echo "sgit diff		» compara o commit local com o commit remoto";
-	echo "sgit current		» volta para o commit atual";
-	echo "sgit throwback		» volta atrás n commits";
-	echo "@@ BOA SORTE! @@";
+	echo "@@ DESCRIPTION OF SGIT'S ALIASES/FUNCTIONS @@";
+	echo "sgit push: saves changes to the repository";
+	echo "sgit pull: gathers changes from the repository";
+	echo "sgit timeline: shows the timeline of the repository";
+	echo "sgit new: initializes and links to a certain repository";
+	echo "sgit status : shows the current state of the local part of the repository";
+	echo "sgit diff: compares the local state to the remote state of the repository";
+	echo "sgit current: goes to the last uploaded commit";
+	echo "sgit throwback : goes back 'n' commits";
+	echo "sgit help : shows all the commands available";
+	echo "@@ GOOD LUCK! @@";
 }
+
 
 case $1 in
 
@@ -120,7 +129,7 @@ case $1 in
 	timeline) timeline
 	;;
 
-	*) echo "@Opção não existente.@"; help
+	*) echo "@ Invalid option. @"; help
 	;;
 
 esac
