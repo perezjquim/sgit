@@ -106,6 +106,8 @@ help()
 	echo "sgit pull: gathers changes from the repository";
 	echo "sgit timeline: shows the timeline of the repository";
 	echo "sgit new: initializes and links to a certain repository";
+	echo "sgit link: links to a certain repository";
+	echo "sgit ignore: ignores certain file types";
 	echo "sgit status : shows the current state of the local part of the repository";
 	echo "sgit diff: compares the local state to the remote state of the repository";
 	echo "sgit current: goes to the last uploaded commit";
