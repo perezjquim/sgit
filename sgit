@@ -42,6 +42,19 @@ new()
 		
 	fi
 }
+ignore()
+{
+	echo "" > .gitignore;
+	for i in "$@"
+	do
+		echo "$i" >> .gitignore;
+	done
+}
+link()
+{
+	git remote rm origin;
+	git remote add origin $1;
+}
 throwback()
 {
 	git checkout HEAD -f > /dev/null;
@@ -109,6 +122,12 @@ case $1 in
 	;;
 	
 	new) new $2
+	;;
+	
+	link) link $2
+	;;
+	
+	ignore) ignore $@
 	;;
 	
 	help) help
