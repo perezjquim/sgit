@@ -47,7 +47,7 @@ ignore()
 	echo "" > .gitignore;
 	for i in "$@"
 	do
-		if [ i -ne 0 ]; then
+		if [ "$i" !=  "ignore" ]; then
 			echo "$i" >> .gitignore;
 		fi
 	done
