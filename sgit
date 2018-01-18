@@ -44,11 +44,11 @@ new()
 }
 ignore()
 {
-	echo "" > .gitignore;
+	cd .git/info;
 	for i in "$@"
 	do
 		if [ "$i" !=  "ignore" ]; then
-			echo "$i" >> .gitignore;
+			echo "$i" >> exclude;
 		fi
 	done
 }
