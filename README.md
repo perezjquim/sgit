@@ -1,19 +1,19 @@
-# SGIT - Simplified (I hope) GIT
+# SGIT - Simplified GIT <small>(i hope)</small>
 
-### Este script serve para abreviar/simplificar a execução de determinados comandos do git, de forma a que certas ações sejam feitas de forma mais direta e acessível. Para além disso, também pretende dar uma perspetiva mais visual de alguns dos processos do mesmo.
+### This script is used to shorten/abbreviate certain git commands, in order to make it more direct and accessible. It also has the objective to make the execution of git a bit more visual and intuitive.
 
-## Lista de comandos:
+## Commands available:
 
-- `sgit push` : coloca as alterações locais no repositório
-- `sgit pull` : recolhe alterações ao repositório
-- `sgit timeline` : mostra a cronologia dos commits
-- `sgit new` : inicializa o repositório
-- `sgit status` : mostra o estado do commit
-- `sgit diff` : compara o commit local com o commit remoto
-- `sgit current` : volta para o commit atual
-- `sgit throwback` : volta atrás n commits
-- `sgit help` : mostra a lista de comandos
+- `sgit push` : saves changes to the repository
+- `sgit pull` : gathers changes from the repository
+- `sgit timeline` : shows the timeline of the repository
+- `sgit new` : initializes and links to a certain repository
+- `sgit status` : shows the current state of the local part of the repository
+- `sgit diff` : compares the local state to the remote state of the repository
+- `sgit current` : goes to the last uploaded commit
+- `sgit throwback` : goes back 'n' commits
+- `sgit help` : shows all the commands available
 
 ### <a href=https://github.com/perezjquim/sgit/archive/master.zip>DOWNLOAD</a>
 
-Para instalar, basta fazer `make` na diretoria onde foram extraídos os ficheiros.
+Installation instruction: execute the command `make` in the directory which you extracted the .zip file.
