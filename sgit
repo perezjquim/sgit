@@ -47,7 +47,9 @@ ignore()
 	echo "" > .gitignore;
 	for i in "$@"
 	do
-		echo "$i" >> .gitignore;
+		if [ i -ne 0 ]; then
+			echo "$i" >> .gitignore;
+		fi
 	done
 }
 link()
