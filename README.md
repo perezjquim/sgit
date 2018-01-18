@@ -8,6 +8,7 @@
 - `sgit pull` : gathers changes from the repository
 - `sgit timeline` : shows the timeline of the repository
 - `sgit new` : initializes and links to a certain repository
+- `sgit link` : links to a certain repository
 - `sgit status` : shows the current state of the local part of the repository
 - `sgit diff` : compares the local state to the remote state of the repository
 - `sgit current` : goes to the last uploaded commit
