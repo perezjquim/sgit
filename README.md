@@ -16,6 +16,6 @@
 - `sgit throwback` : goes back 'n' commits
 - `sgit help` : shows all the commands available
 
-### <a href=https://github.com/perezjquim/sgit/archive/master.zip>DOWNLOAD</a>
+### <a href="https://github.com/perezjquim/sgit/archive/master.zip"> DOWNLOAD </a>
 
 Installation instruction: execute the command `make` in the directory which you extracted the .zip file.
