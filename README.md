@@ -18,4 +18,4 @@
 
 ## <a href="https://github.com/perezjquim/sgit/archive/master.zip"> DOWNLOAD </a>
 
-Installation instruction: execute the command `make` in the directory which you extracted the .zip file.
+Installation instructions: execute the command `make` in the directory which you extracted the .zip file.
