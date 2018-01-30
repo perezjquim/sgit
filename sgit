@@ -29,33 +29,50 @@ new()
 {
 	if [ "$1" == "" ]; then
 	
-		echo "@ Invalid git link. @";
+		echo "@ Must be something like: 'sgit new <link>' @"
+		echo "@ Example: 'sgit new git@github.com:perezjquim/acertainrepo.git'";
 		
 	else
 	
 		git init;
 		git remote add origin $1;
-		echo "O início do desastre" > README.md;
+		echo "The beginning of them all" > README.md;
 		git add --all;
-		git commit -m "O início do desastre";
+		git commit -m "The beginning of them all";
 		git push -u origin master;
 		
 	fi
 }
 ignore()
 {
-	cd .git/info;
-	for i in "$@"
-	do
-		if [ "$i" !=  "ignore" ]; then
-			echo "$i" >> exclude;
-		fi
-	done
+	if [ "$1" == "" ]; then
+	
+		echo "@ Must be something like: 'sgit ignore <file/extension/folder>' @"
+		echo "@ Example: 'sgit ignore *.class'";
+		
+	else
+
+		for i in "$@"
+		do
+			if [ "$i" !=  "ignore" ]; then
+				echo "$i" >> .gitignore;
+			fi
+		done
+	
+	fi
 }
-link()
+clone()
 {
-	git remote rm origin;
-	git remote add origin $1;
+	if [ "$1" == "" ]; then
+	
+		echo "@ Must be something like: 'sgit clone <link>' @"
+		echo "@ Example: 'sgit clone git@github.com:perezjquim/acertainrepo.git'";
+		
+	else
+
+		git clone $1;
+		
+	fi
 }
 throwback()
 {
@@ -105,13 +122,13 @@ help()
 	echo "sgit push: saves changes to the repository";
 	echo "sgit pull: gathers changes from the repository";
 	echo "sgit timeline: shows the timeline of the repository";
-	echo "sgit new: initializes and links to a certain repository";
-	echo "sgit link: links to a certain repository";
-	echo "sgit ignore: ignores certain file types";
+	echo "sgit new: initializes a certain repository";
+	echo "sgit clone: clones a certain repository";
+	echo "sgit ignore: ignores certain file types/folders";
 	echo "sgit status : shows the current state of the local part of the repository";
-	echo "sgit diff: compares the local state to the remote state of the repository";
-	echo "sgit current: goes to the last uploaded commit";
-	echo "sgit throwback : goes back 'n' commits";
+	echo "sgit diff: compares the current state to the latest commit";
+	echo "sgit current: the files return to the state of the latest commit";
+	echo "sgit throwback : the files turns back 'n' commits";
 	echo "sgit help : shows all the commands available";
 	echo "@@ GOOD LUCK! @@";
 }
@@ -128,7 +145,7 @@ case $1 in
 	new) new $2
 	;;
 	
-	link) link $2
+	clone) clone $2
 	;;
 	
 	ignore) ignore $@
