@@ -126,9 +126,9 @@ help()
 	echo "sgit clone: clones a certain repository";
 	echo "sgit ignore: ignores certain file types/folders";
 	echo "sgit status : shows the current state of the local part of the repository";
-	echo "sgit diff: compares the current state to the latest commit";
+	echo "sgit diff: compares the current state to the latest commit's";
 	echo "sgit current: the files return to the state of the latest commit";
-	echo "sgit throwback : the files turns back 'n' commits";
+	echo "sgit throwback : the files turn back 'n' commits";
 	echo "sgit help : shows all the commands available";
 	echo "@@ GOOD LUCK! @@";
 }
