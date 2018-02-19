@@ -17,7 +17,7 @@
 - `sgit help` : shows all the commands available
 
 ## Screenshot (GUI):
-<img src="http://imgur.com/AZRXryNl.png"/>
+<img src="http://imgur.com/xCUoWjZl.png"/>
 
 ## GUI (Java) version - <a href="https://github.com/perezjquim/sgit/raw/master/sgit-java/sgit.jar"> DOWNLOAD </a>
 (Then you can execute the .jar file - ex.: `java -jar sgit.jar`)

@@ -123,14 +123,21 @@ public class sgit
 	}
 	private static void push(String commitName)
 	{
-		console.getTextArea().clear();
-		String[] cmdPush = { "/bin/sh","-c", "echo "+commitName+" | sgit push" };		
-		try
-		{				
-			Cmd.exec(cmdPush,console.getTextArea(),repoDirectory);
+		if(!commitName.equals("") && !currentDir.getText().equals(""))
+		{
+			console.getTextArea().clear();
+			String[] cmdPush = { "/bin/sh","-c", "echo "+commitName+" | sgit push" };		
+			try
+			{				
+				Cmd.exec(cmdPush,console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
 		}
-		catch(IOException e)
-		{ e.printStackTrace(); }			
+		else
+		{
+			IO.popup("Make sure you've chosen a directory and a name for the new commit.");
+		}			
 	}
 	private static void pull()
 	{
