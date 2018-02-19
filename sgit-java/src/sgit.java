@@ -73,53 +73,88 @@ public class sgit
 	}
 	private static void status()
 	{
-		console.getTextArea().clear();
-		try
-		{
-			Cmd.exec("sgit status",console.getTextArea(),repoDirectory);
+		if(!currentDir.getText().equals(""))
+		{				
+			console.getTextArea().clear();
+			try
+			{
+				Cmd.exec("sgit status",console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
 		}
-		catch(IOException e)
-		{ e.printStackTrace(); }
+		else
+		{
+			IO.popup("Make sure you've chosen a directory.");
+		}			
 	}
 	private static void diff()
 	{
-		console.getTextArea().clear();		
-		try
-		{				
-			Cmd.exec("sgit diff",console.getTextArea(),repoDirectory);
+		if(!currentDir.getText().equals(""))
+		{			
+			console.getTextArea().clear();		
+			try
+			{				
+				Cmd.exec("sgit diff",console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
 		}
-		catch(IOException e)
-		{ e.printStackTrace(); }
+		else
+		{
+			IO.popup("Make sure you've chosen a directory.");
+		}			
 	}
 	private static void timeline()
 	{
-		console.getTextArea().clear();		
-		try
-		{				
-			Cmd.exec("sgit timeline",console.getTextArea(),repoDirectory);
-		}
-		catch(IOException e)
-		{ e.printStackTrace(); }		
+		if(!currentDir.getText().equals(""))
+		{						
+			console.getTextArea().clear();		
+			try
+			{				
+				Cmd.exec("sgit timeline",console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
+		}			
+		else
+		{
+			IO.popup("Make sure you've chosen a directory.");
+		}						
 	}
 	private static void throwback()
 	{
-		console.getTextArea().clear();		
-		try
+		if(!currentDir.getText().equals(""))
 		{				
-			Cmd.exec("sgit timeline",console.getTextArea(),repoDirectory);
-		}
-		catch(IOException e)
-		{ e.printStackTrace(); }			
+			console.getTextArea().clear();		
+			try
+			{				
+				Cmd.exec("sgit throwback",console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
+		}		
+		else
+		{
+			IO.popup("Make sure you've chosen a directory.");
+		}					
 	}
 	private static void current()
 	{
-		console.getTextArea().clear();		
-		try
-		{				
-			Cmd.exec("sgit current",console.getTextArea(),repoDirectory);
-		}
-		catch(IOException e)
-		{ e.printStackTrace(); }			
+		if(!currentDir.getText().equals(""))
+		{		
+			console.getTextArea().clear();		
+			try
+			{				
+				Cmd.exec("sgit current",console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
+		}			
+		else
+		{
+			IO.popup("Make sure you've chosen a directory.");
+		}						
 	}
 	private static void push(String commitName)
 	{
@@ -141,12 +176,19 @@ public class sgit
 	}
 	private static void pull()
 	{
-		console.getTextArea().clear();		
-		try
+		if(!currentDir.getText().equals(""))
 		{				
-			Cmd.exec("sgit pull",console.getTextArea(),repoDirectory);
-		}
-		catch(IOException e)
-		{ e.printStackTrace(); }				
+			console.getTextArea().clear();		
+			try
+			{				
+				Cmd.exec("sgit pull",console.getTextArea(),repoDirectory);
+			}
+			catch(IOException e)
+			{ e.printStackTrace(); }
+		}			
+		else
+		{
+			IO.popup("Make sure you've chosen a directory.");
+		}							
 	}
 }
