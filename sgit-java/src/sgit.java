@@ -39,6 +39,19 @@ public class sgit
 			}));										
 		main.add(panHistory);
 
+		Panel panPushPull = new Panel("Push/Pull");
+		TextField commitNameField = new TextField();
+		panPushPull.add(commitNameField);
+		panPushPull.add(new Button("Push",()->
+			{
+				push(commitNameField.getText());
+			}));
+		panPushPull.add(new Button("Pull",()->
+			{
+				pull();
+			}));		
+		main.add(panPushPull);
+
 		Panel panConsole = new Panel();
 		console = new ScrollableTextArea(TextArea.HEIGHT_MEDIUM,TextArea.WIDTH_LARGE);
 		panConsole.add(console);
@@ -95,5 +108,26 @@ public class sgit
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }			
+	}
+	private static void push(String commitName)
+	{
+		console.getTextArea().clear();
+		String[] cmdPush = { "/bin/sh","-c", "echo "+commitName+" | sgit push" };		
+		try
+		{				
+			Cmd.exec(cmdPush,console.getTextArea());
+		}
+		catch(IOException e)
+		{ e.printStackTrace(); }			
+	}
+	private static void pull()
+	{
+		console.getTextArea().clear();		
+		try
+		{				
+			Cmd.exec("sgit pull",console.getTextArea());
+		}
+		catch(IOException e)
+		{ e.printStackTrace(); }				
 	}
 }
