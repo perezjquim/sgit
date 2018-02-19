@@ -8,10 +8,22 @@ import javax.swing.*;
 public class sgit
 {
 	private static GUI main;
+	private static File repoDirectory;
+	private static TextArea currentDir;	
 	private static ScrollableTextArea console;
 	public static void main(String[] args)
 	{
 		main = new GUI("Sgit");
+
+		Panel panRepo = new Panel("Git repository directory");
+		currentDir = new TextArea(TextArea.HEIGHT_SMALL,TextArea.WIDTH_MEDIUM);
+		panRepo.add(currentDir);
+		panRepo.add(new Button("Choose directory",()->
+			{
+				repoDirectory = IO.askFolder();
+				currentDir.setText(repoDirectory.getAbsolutePath());
+			}));
+		main.add(panRepo);		
 
 		Panel panAnalysis = new Panel("Analysis");
 		panAnalysis.add(new Button("Status",()->
@@ -64,7 +76,7 @@ public class sgit
 		console.getTextArea().clear();
 		try
 		{
-			Cmd.exec("sgit status",console.getTextArea());
+			Cmd.exec("sgit status",console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }
@@ -74,7 +86,7 @@ public class sgit
 		console.getTextArea().clear();		
 		try
 		{				
-			Cmd.exec("sgit diff",console.getTextArea());
+			Cmd.exec("sgit diff",console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }
@@ -84,7 +96,7 @@ public class sgit
 		console.getTextArea().clear();		
 		try
 		{				
-			Cmd.exec("sgit timeline",console.getTextArea());
+			Cmd.exec("sgit timeline",console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }		
@@ -94,7 +106,7 @@ public class sgit
 		console.getTextArea().clear();		
 		try
 		{				
-			Cmd.exec("sgit timeline",console.getTextArea());
+			Cmd.exec("sgit timeline",console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }			
@@ -104,7 +116,7 @@ public class sgit
 		console.getTextArea().clear();		
 		try
 		{				
-			Cmd.exec("sgit current",console.getTextArea());
+			Cmd.exec("sgit current",console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }			
@@ -115,7 +127,7 @@ public class sgit
 		String[] cmdPush = { "/bin/sh","-c", "echo "+commitName+" | sgit push" };		
 		try
 		{				
-			Cmd.exec(cmdPush,console.getTextArea());
+			Cmd.exec(cmdPush,console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }			
@@ -125,7 +137,7 @@ public class sgit
 		console.getTextArea().clear();		
 		try
 		{				
-			Cmd.exec("sgit pull",console.getTextArea());
+			Cmd.exec("sgit pull",console.getTextArea(),repoDirectory);
 		}
 		catch(IOException e)
 		{ e.printStackTrace(); }				
