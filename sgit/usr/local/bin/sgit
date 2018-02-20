@@ -1,0 +1,175 @@
+#!/bin/bash
+
+#########
+## SGIT ##
+#########
+
+################
+## COMMANDS ##
+################
+push()
+{
+	echo "@ Name of the new commit: @";
+	read -e nome;
+
+	git add --all;
+	git commit -m "$nome";
+	git push origin master;
+}
+pull()
+{ 
+	echo "@ Gathering changes from the remote repository.. @";
+	git pull origin master; 
+}
+timeline()
+{
+	git log --pretty=format:"%C(bold magenta)%ad %C(red)%d|| %C(white)%s %C(red)|| %C(blue)[%cn]" --decorate --date=relative;
+}
+new()
+{
+	if [ "$1" == "" ]; then
+	
+		echo "@ Must be something like: 'sgit new <link>' @"
+		echo "@ Example: 'sgit new git@github.com:perezjquim/acertainrepo.git'";
+		
+	else
+	
+		git init;
+		git remote add origin $1;
+		echo "The beginning of them all" > README.md;
+		git add --all;
+		git commit -m "The beginning of them all";
+		git push -u origin master;
+		
+	fi
+}
+ignore()
+{
+	if [ "$1" == "" ]; then
+	
+		echo "@ Must be something like: 'sgit ignore <file/extension/folder>' @"
+		echo "@ Example: 'sgit ignore *.class'";
+		
+	else
+
+		for i in "$@"
+		do
+			if [ "$i" !=  "ignore" ]; then
+				echo "$i" >> .gitignore;
+			fi
+		done
+	
+	fi
+}
+clone()
+{
+	if [ "$1" == "" ]; then
+	
+		echo "@ Must be something like: 'sgit clone <link>' @"
+		echo "@ Example: 'sgit clone git@github.com:perezjquim/acertainrepo.git'";
+		
+	else
+
+		git clone $1;
+		
+	fi
+}
+throwback()
+{
+	git checkout HEAD -f > /dev/null;
+	
+	if [ $? -ne 0 ]; then
+	
+		echo "@ An error ocurred (possibly a conflict). @";
+		
+	else
+		
+		if [ "$1" == "" ] || [ "$1" -le 1 ]; then
+	
+			git revert --no-commit HEAD~1..HEAD;
+			echo "@ Changes were reverted to 1 commit behind the latest commit. @";
+		
+		else
+	
+			git revert --no-commit HEAD~$1..HEAD;
+			echo "@ Changes were reverted to $1 commits behind the latest commit. @";
+		
+		fi
+		
+	fi
+}
+current()
+{ 
+	git checkout HEAD -f > /dev/null; 
+	
+	if [ $? -eq 0 ]; then
+	
+		echo "@ Changes were reverted to the latest commit. @";
+		
+	else
+	
+		echo "@ An error ocurred (possibly a conflict). @";
+		
+	fi
+}
+status()
+{ git status; }
+diff()
+{ echo "@ Differences between the two commits: @"; git diff; }
+help()
+{
+	echo "@@ DESCRIPTION OF SGIT'S ALIASES/FUNCTIONS @@";
+	echo "sgit push: saves changes to the repository";
+	echo "sgit pull: gathers changes from the repository";
+	echo "sgit timeline: shows the timeline of the repository";
+	echo "sgit new: initializes a certain repository";
+	echo "sgit clone: clones a certain repository";
+	echo "sgit ignore: ignores certain file types/folders";
+	echo "sgit status : shows the current state of the local part of the repository";
+	echo "sgit diff: compares the current state to the latest commit's";
+	echo "sgit current: the files return to the state of the latest commit";
+	echo "sgit throwback : the files turn back 'n' commits";
+	echo "sgit help : shows all the commands available";
+	echo "@@ GOOD LUCK! @@";
+}
+
+
+case $1 in
+
+	push) push
+	;;
+
+	pull) pull
+	;;
+	
+	new) new $2
+	;;
+	
+	clone) clone $2
+	;;
+	
+	ignore) ignore $@
+	;;
+	
+	help) help
+	;;	
+
+	throwback) throwback $2
+	;;
+
+	current) current
+	;;	
+
+	status) status
+	;;
+	
+	diff) diff
+	;;
+	
+	timeline) timeline
+	;;
+
+	*) echo "@ Invalid option. @"; help
+	;;
+
+esac

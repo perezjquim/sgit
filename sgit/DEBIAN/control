@@ -1,0 +1,5 @@
+Package: sgit
+Maintainer: perezjquim
+Architecture: all
+Version: 1.0
+Description: Simplified (I hope) version of git

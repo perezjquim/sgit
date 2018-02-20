@@ -19,8 +19,4 @@
 ## Screenshot (GUI):
 <img src="http://imgur.com/xCUoWjZl.png"/>
 
-## GUI (Java) version - <a href="https://github.com/perezjquim/sgit/raw/master/sgit-java/sgit.jar"> DOWNLOAD </a>
-(Then you can execute the .jar file - ex.: `java -jar sgit.jar`)
-
-## CLI (Bash) version - <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/perezjquim/sgit/tree/master/sgit-bash"> DOWNLOAD </a>
-(To install, execute the command `make` in the directory which you extracted the .zip file)
+### <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/perezjquim/sgit/tree/master/sgit-install.deb"> DOWNLOAD (.deb) </a>
