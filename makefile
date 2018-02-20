@@ -8,5 +8,5 @@ update:
 
 repackage:
 	@echo "@Repackaging...@"
-	@dpkg-deb --build sgit-deb sgit-install > /dev/null
+	@dpkg-deb --build sgit-deb sgit-install.deb > /dev/null
 	@echo "@Repackaged!@"
