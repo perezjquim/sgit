@@ -19,4 +19,4 @@
 ## Screenshot (GUI):
 <img src="http://imgur.com/xCUoWjZl.png"/>
 
-### <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/perezjquim/sgit/tree/master/sgit-install.deb"> DOWNLOAD (.deb) </a>
+### <a href="https://github.com/perezjquim/sgit/raw/master/sgit-install.deb"> DOWNLOAD (.deb) </a>
