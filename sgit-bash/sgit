@@ -84,17 +84,17 @@ throwback()
 		
 	else
 		
-		if [ "$1" == "" ] || [ "$1" -le 1 ]; then
-	
-			git revert --no-commit HEAD~1..HEAD;
-			echo "@ Changes were reverted to 1 commit behind the latest commit. @";
-		
-		else
-	
-			git revert --no-commit HEAD~$1..HEAD;
-			echo "@ Changes were reverted to $1 commits behind the latest commit. @";
+		n=$1;
+
+		if [ "$n" == "" ] || [ "$n" -le 1 ]; then
+
+			n=1;
 		
 		fi
+	
+		git revert --no-commit HEAD~$n..HEAD;
+		
+		echo "@ Changes were reverted to $n commits behind the latest commit ($(git rev-parse HEAD~$n)). @";
 		
 	fi
 }
