@@ -7,58 +7,77 @@
 ################
 ## COMMANDS ##
 ################
+create()
+{
+	if [ "$1" == "" ]; then
+		
+			echo "@ Must be something like: 'sgit create <name>' @"
+			echo "@ Example: 'sgit create master' @"
+
+	else
+
+		git checkout -b $1
+		git push origin $1
+
+	fi
+}
+switch-to()
+{
+	if [ "$1" == "" ]; then
+		
+			echo "@ Must be something like: 'sgit switch-to <name>' @"
+			echo "@ Example: 'sgit switch-to master' @"
+
+	else
+
+		git checkout $1
+
+	fi
+}
 push()
 {
-	echo "@ Name of the new commit: @";
-	read -e nome;
+	echo "@ You're currently on: @"
+	echo $(git rev-parse --abbrev-ref HEAD)
+	echo "@ Press [ENTER] to continue @"
+	read
 
-	git add --all;
-	git commit -m "$nome";
-	git push origin master;
+	echo "@ Name of the new commit: @"
+	read -e nome
+
+	git add --all
+	git commit -m "$nome"
+	git push origin $(git rev-parse --abbrev-ref HEAD)
 }
 pull()
-{ 
-	echo "@ Gathering changes from the remote repository.. @";
-	git pull origin master; 
+{
+	echo "@ You're currently on: @"
+	echo $(git rev-parse --abbrev-ref HEAD)
+	echo "@ Press [ENTER] to continue @"
+	read
+
+	echo "@ Gathering changes from the remote repository.. @"
+	git pull origin $(git rev-parse --abbrev-ref HEAD)
 }
 timeline()
 {
-	git log --pretty=format:"%C(bold magenta)%ad %C(red)%d|| %C(white)%s %C(red)|| %C(blue)[%cn]" --decorate --date=relative;
+	git log --pretty=format:"%C(bold magenta)%ad %C(red)%d|| %C(white)%s %C(red)|| %C(blue)[%cn]" --decorate --date=relative
 }
 new()
 {
 	if [ "$1" == "" ]; then
 	
 		echo "@ Must be something like: 'sgit new <link>' @"
-		echo "@ Example: 'sgit new git@github.com:perezjquim/acertainrepo.git'";
+		echo "@ Example: 'sgit new git@github.com:perezjquim/acertainrepo.git'"
 		
 	else
 	
-		git init;
-		git remote add origin $1;
-		echo "The beginning of them all" > README.md;
-		git add --all;
-		git commit -m "The beginning of them all";
-		git push -u origin master;
+		git init
+		git remote add origin $1
+		echo "The beginning of them all" > README.md
+		git add --all
+		git commit -m "The beginning of them all"
+		git push -u origin master
 		
-	fi
-}
-ignore()
-{
-	if [ "$1" == "" ]; then
-	
-		echo "@ Must be something like: 'sgit ignore <file/extension/folder>' @"
-		echo "@ Example: 'sgit ignore *.class'";
-		
-	else
-
-		for i in "$@"
-		do
-			if [ "$i" !=  "ignore" ]; then
-				echo "$i" >> .gitignore;
-			fi
-		done
-	
 	fi
 }
 clone()
@@ -66,71 +85,83 @@ clone()
 	if [ "$1" == "" ]; then
 	
 		echo "@ Must be something like: 'sgit clone <link>' @"
-		echo "@ Example: 'sgit clone git@github.com:perezjquim/acertainrepo.git'";
+		echo "@ Example: 'sgit clone git@github.com:perezjquim/acertainrepo.git'"
 		
 	else
 
-		git clone $1;
+		git clone $1
 		
 	fi
 }
 throwback()
 {
-	git checkout HEAD -f > /dev/null;
+	git checkout HEAD -f > /dev/null
 	
 	if [ $? -ne 0 ]; then
 	
-		echo "@ An error ocurred (possibly a conflict). @";
+		echo "@ An error ocurred (possibly a conflict). @"
 		
 	else
 		
-		n=$1;
+		n=$1
 
 		if [ "$n" == "" ] || [ "$n" -le 1 ]; then
 
-			n=1;
+			n=1
 		
 		fi
 	
-		git revert --no-commit HEAD~$n..HEAD;
+		git revert --no-commit HEAD~$n..HEAD
 		
-		echo "@ Changes were reverted to $n commits behind the latest commit ($(git rev-parse HEAD~$n)). @";
+		echo "@ Changes were reverted to $n commits behind the latest commit ($(git rev-parse HEAD~$n)). @"
 		
 	fi
 }
 current()
 { 
-	git checkout HEAD -f > /dev/null; 
+	git checkout HEAD -f > /dev/null;
 	
 	if [ $? -eq 0 ]; then
 	
-		echo "@ Changes were reverted to the latest commit. @";
+		echo "@ Changes were reverted to the latest commit. @"
 		
 	else
 	
-		echo "@ An error ocurred (possibly a conflict). @";
+		echo "@ An error ocurred (possibly a conflict). @"
 		
 	fi
 }
 status()
-{ git status; }
+{ 
+	git status
+}
 diff()
-{ echo "@ Differences between the two commits: @"; git diff; }
+{ 
+	echo "@ Differences between the two commits: @"
+	git diff
+}
+merge()
+{
+	git merge $1
+	git push origin $(git rev-parse --abbrev-ref HEAD)	
+}
 help()
 {
-	echo "@@ DESCRIPTION OF SGIT'S ALIASES/FUNCTIONS @@";
-	echo "sgit push: saves changes to the repository";
-	echo "sgit pull: gathers changes from the repository";
-	echo "sgit timeline: shows the timeline of the repository";
-	echo "sgit new: initializes a certain repository";
-	echo "sgit clone: clones a certain repository";
-	echo "sgit ignore: ignores certain file types/folders";
-	echo "sgit status : shows the current state of the local part of the repository";
-	echo "sgit diff: compares the current state to the latest commit's";
-	echo "sgit current: the files return to the state of the latest commit";
-	echo "sgit throwback : the files turn back 'n' commits";
-	echo "sgit help : shows all the commands available";
-	echo "@@ GOOD LUCK! @@";
+	echo "@@ DESCRIPTION OF SGIT'S ALIASES/FUNCTIONS @@"
+	echo "sgit push: saves changes to the repository"
+	echo "sgit pull: gathers changes from the repository"
+	echo "sgit timeline: shows the timeline of the repository"
+	echo "sgit new: initializes a certain repository"
+	echo "sgit merge: merges the current repository into another"	
+	echo "sgit clone: clones a certain repository"
+	echo "sgit create: creates a new branch"
+	echo "sgit switch-to: switches over to another branch"
+	echo "sgit status : shows the current state of the local part of the repository"
+	echo "sgit diff: compares the current state to the latest commit's"
+	echo "sgit current: the files return to the state of the latest commit"
+	echo "sgit throwback : the files turn back 'n' commits"
+	echo "sgit help : shows all the commands available"
+	echo "@@ GOOD LUCK! @@"
 }
 
 
@@ -148,9 +179,6 @@ case $1 in
 	clone) clone $2
 	;;
 	
-	ignore) ignore $@
-	;;
-	
 	help) help
 	;;	
 
@@ -165,8 +193,17 @@ case $1 in
 	
 	diff) diff
 	;;
+
+	merge) merge $2
+	;;
 	
 	timeline) timeline
+	;;
+
+	create) create $2
+	;;
+
+	switch-to) switch-to $2
 	;;
 
 	*) echo "@ Invalid option. @"; help
