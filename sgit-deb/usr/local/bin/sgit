@@ -21,12 +21,12 @@ create()
 
 	fi
 }
-switch-to()
+sw()
 {
 	if [ "$1" == "" ]; then
 		
-			echo "@ Must be something like: 'sgit switch-to <name>' @"
-			echo "@ Example: 'sgit switch-to master' @"
+			echo "@ Must be something like: 'sgit sw <name>' @"
+			echo "@ Example: 'sgit sw master' @"
 
 	else
 
@@ -145,6 +145,10 @@ merge()
 	git merge $1
 	git push origin $(git rev-parse --abbrev-ref HEAD)	
 }
+branch()
+{
+	git branch
+}
 help()
 {
 	echo "@@ DESCRIPTION OF SGIT'S ALIASES/FUNCTIONS @@"
@@ -155,7 +159,8 @@ help()
 	echo "sgit merge: merges the current repository into another"	
 	echo "sgit clone: clones a certain repository"
 	echo "sgit create: creates a new branch"
-	echo "sgit switch-to: switches over to another branch"
+	echo "sgit sw: switches over to another branch"
+	echo "sgit branch: outputs the name of the current branch"
 	echo "sgit status : shows the current state of the local part of the repository"
 	echo "sgit diff: compares the current state to the latest commit's"
 	echo "sgit current: the files return to the state of the latest commit"
@@ -203,7 +208,10 @@ case $1 in
 	create) create $2
 	;;
 
-	switch-to) switch-to $2
+	sw) sw $2
+	;;
+
+	branch) branch
 	;;
 
 	*) echo "@ Invalid option. @"; help
