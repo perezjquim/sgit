@@ -17,6 +17,6 @@
 - `sgit help` : shows all the commands available
 
 ## Screenshot (GUI):
-<img src="http://imgur.com/xCUoWjZl.png"/>
+<img src="https://imgur.com/xCUoWjZl.png"/>
 
 ### <a href="https://github.com/perezjquim/sgit/raw/master/sgit-install.deb"> DOWNLOAD (.deb) </a>
